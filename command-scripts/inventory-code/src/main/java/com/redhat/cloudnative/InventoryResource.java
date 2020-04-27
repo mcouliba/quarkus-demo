@@ -17,6 +17,17 @@ public class InventoryResource {
     private EntityManager em;
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Inventory> getAll() {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Inventory> cq = cb.createQuery(Inventory.class);
+        Root<Inventory> rootEntry = cq.from(Inventory.class);
+        CriteriaQuery<Inventory> all = cq.select(rootEntry);
+        TypedQuery<Inventory> allQuery = em.createQuery(all);
+        return allQuery.getResultList();
+    }
+    
+    @GET
     @Path("/{itemId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Inventory getAvailability(@PathParam("itemId") String itemId) {

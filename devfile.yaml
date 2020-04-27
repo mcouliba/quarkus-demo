@@ -43,3 +43,12 @@ commands:
           echo "------  END  ------"
         component: workshop-tools
         workdir: /projects/quarkus-demo/command-scripts/inventory-code
+  - name: 'Inventory - Code as Spring'
+    actions:
+      - type: exec
+        command: >-
+          echo "------ START ------";
+          ./solve.sh;
+          echo "------  END  ------"
+        component: workshop-tools
+        workdir: /projects/quarkus-demo/command-scripts/inventory-code-as-spring
