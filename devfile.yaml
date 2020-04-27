@@ -1,6 +1,6 @@
 apiVersion: 1.0.0
 metadata:
-  name: quarkus-demo
+  name: wksp-quarkus-demo
 projects:
   - name: quarkus-demo
     source:
