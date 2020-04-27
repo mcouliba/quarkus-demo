@@ -1,0 +1,45 @@
+apiVersion: 1.0.0
+metadata:
+  name: quarkus-demo
+projects:
+  - name: quarkus-demo
+    source:
+      location: 'https://github.com/mcouliba/quarkus-demo.git'
+      type: git
+      branch: "master"
+components:
+  - type: dockerimage
+    alias: maven
+    image: 'quay.io/eclipse/che-java11-maven:7.4.0'
+    memoryLimit: 256Mi
+    mountSources: true
+    endpoints:
+      - name: localhost-8080
+        port: 8080
+      - name: localhost-9000
+        port: 9000
+  - id: redhat/workshop-tools/3.2
+    type: chePlugin
+    alias: workshop-tools
+commands:
+  - name: 'Inventory - Compile (Dev Mode)'
+    actions:
+      - workdir: /projects/inventory-quarkus
+        type: exec
+        command: 'mvn compile quarkus:dev'
+        component: workshop-tools
+  - name: 'Inventory - Build'
+    actions:
+      - workdir: /projects/inventory-quarkus
+        type: exec
+        command: mvn clean package -DskipTests
+        component: workshop-tools
+  - name: 'Inventory - Code'
+    actions:
+      - type: exec
+        command: >-
+          echo "------ START ------";
+          ./solve.sh;
+          echo "------  END  ------"
+        component: workshop-tools
+        workdir: /projects/quarkus-demo/command-scripts/inventory-code
